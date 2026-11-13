@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin - NeuroGen AI Academy Attendance</title>
+<link rel="stylesheet" href="app.css">
+</head><body>
+<div class="top"><b>NeuroGen AI Academy - Admin</b><span class="sp"></span><span class="clock" id="clock"></span>
+  <button onclick="changePassword()">Change password</button><button onclick="logout()">Log out</button></div>
+<main>
+  <div class="tabs">
+    <button class="tab on" data-t="today">Today</button><button class="tab" data-t="staff">Staff</button><button class="tab" data-t="attendance">Attendance</button>
+    <button class="tab" data-t="requests">Requests <span id="pendN" class="badge pending" hidden></span></button><button class="tab" data-t="policies">Policies</button>
+  </div>
+
+  <section id="p-today" class="panel">
+    <div class="grid g3" id="cards" style="margin-bottom:1rem"></div>
+    <div class="card scroll"><table><thead><tr><th>Staff</th><th>Status</th><th>First in</th><th>Last out</th><th>Breaks</th><th>Net hours</th><th>Alerts</th></tr></thead><tbody id="tToday"></tbody></table></div>
+  </section>
+
+  <section id="p-staff" class="panel" hidden>
+    <div class="row" style="margin-bottom:.75rem"><h2 style="flex:1;margin:0">Staff accounts</h2><button class="primary" id="addU">Add staff</button></div>
+    <div class="card scroll"><table><thead><tr><th>Name</th><th>Email</th><th>Department</th><th>Role</th><th>Status</th><th></th></tr></thead><tbody id="tUsers"></tbody></table></div>
+  </section>
+
+  <section id="p-attendance" class="panel" hidden>
+    <div class="card"><div class="row">
+      <div><label for="aFrom">From</label><input type="date" id="aFrom" style="width:auto"></div>
+      <div><label for="aTo">To</label><input type="date" id="aTo" style="width:auto"></div>
+      <div><label for="aUser">Staff</label><select id="aUser" style="width:auto"></select></div>
+      <button class="primary" id="aGo" style="align-self:end">Show</button>
+      <span class="mute" id="aTotal" style="align-self:end"></span></div></div>
+    <div class="card scroll"><table><thead><tr><th>Date</th><th>Staff</th><th>In</th><th>Out</th><th>Breaks</th><th>Net</th><th>Flags</th><th></th></tr></thead><tbody id="tAtt"></tbody></table></div>
+  </section>
+
+  <section id="p-requests" class="panel" hidden><div id="reqList"></div></section>
+
+  <section id="p-policies" class="panel" hidden>
+    <div class="card"><h2>Office hours</h2><div class="grid g3">
+      <div class="field"><label for="oStart">Office starts</label><input type="time" id="oStart"></div>
+      <div class="field"><label for="oEnd">Office ends</label><input type="time" id="oEnd"></div>
+      <div class="field"><label for="oGrace">Late grace (minutes)</label><input type="number" id="oGrace" min="0" max="120"></div></div></div>
+    <div class="card scroll"><h2>Break policy</h2><p class="mute small">Unpaid breaks are deducted from net working hours. Paid breaks count as working time. Breaks longer than the maximum raise an alert for staff and admin.</p>
+      <table><thead><tr><th>Break</th><th>Paid</th><th>Maximum (minutes)</th></tr></thead><tbody id="tPol"></tbody></table></div>
+    <button class="primary" id="polSave">Save policies</button>
+  </section>
+</main>
+
+<dialog id="dUser"><h2 id="dUserT">Staff</h2>
+  <div class="field"><label for="uName">Full name</label><input id="uName"></div>
+  <div class="field"><label for="uEmail">Email (used to sign in)</label><input id="uEmail" type="email"></div>
+  <div class="field"><label for="uDept">Department</label><input id="uDept"></div>
+  <div class="field"><label for="uRole">Role</label><select id="uRole"><option value="staff">Staff (own attendance only)</option><option value="admin">Admin (full control, can add and remove staff)</option></select></div>
+  <div class="field"><label for="uPw" id="uPwL">Password</label><input id="uPw" type="password" autocomplete="new-password"></div>
+  <div class="field"><label><input type="checkbox" id="uActive"> Account active</label></div>
+  <div class="row" style="justify-content:flex-end"><button id="uCancel">Cancel</button><button class="primary" id="uSave">Save</button></div></dialog>
+
+<dialog id="dAtt"><h2>Edit attendance</h2><p class="mute small" id="dAttInfo"></p>
+  <div class="grid g2"><div class="field"><label for="eIn">Check-in time (IST)</label><input type="time" id="eIn"></div>
+  <div class="field"><label for="eOut">Check-out time (IST)</label><input type="time" id="eOut"></div></div>
+  <div class="field"><label for="eOutD">Check-out date</label><input type="date" id="eOutD"></div>
+  <div class="field"><label for="eWhy">Reason for edit (recorded in audit log)</label><textarea id="eWhy" rows="2"></textarea></div>
+  <div class="row" style="justify-content:flex-end"><button id="eCancel">Cancel</button><button class="primary" id="eSave">Save edit</button></div></dialog>
+
+<script src="common.js"></script>
+<script src="admin.js"></script>
+</body></html>

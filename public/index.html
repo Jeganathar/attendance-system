@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sign in - NeuroGen AI Academy Attendance</title>
+<link rel="stylesheet" href="app.css">
+</head><body>
+<div class="login">
+  <h1>NeuroGen AI Academy</h1>
+  <p class="mute">Staff attendance and working hours</p>
+  <form class="card" id="f">
+    <div class="field"><label for="email">Email</label><input id="email" type="email" autocomplete="username" required autofocus></div>
+    <div class="field"><label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password" required></div>
+    <button class="primary" style="width:100%">Sign in</button>
+  </form>
+</div>
+<script src="common.js"></script>
+<script>
+api('/me').then(u => location.href = u.role === 'admin' ? '/admin.html' : '/staff.html').catch(() => {});
+$('#f').onsubmit = e => { e.preventDefault(); run(async () => {
+  const r = await post('/login', { email: $('#email').value, password: $('#pw').value });
+  location.href = r.role === 'admin' ? '/admin.html' : '/staff.html';
+}); };
+</script></body></html>

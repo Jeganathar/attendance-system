@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>My Attendance - NeuroGen AI Academy</title>
+<link rel="stylesheet" href="app.css">
+</head><body>
+<div class="top"><b>NeuroGen AI Academy</b><span class="sp"></span><span class="clock" id="clock"></span><span id="who"></span>
+  <button onclick="changePassword()">Change password</button><button onclick="logout()">Log out</button></div>
+<main>
+  <div id="warn"></div>
+  <div class="tabs" role="tablist">
+    <button class="tab on" data-t="today">Today</button><button class="tab" data-t="history">History</button><button class="tab" data-t="requests">Corrections</button>
+  </div>
+
+  <section id="p-today" class="panel">
+    <div class="card">
+      <div class="row" style="justify-content:space-between">
+        <div><span id="badge" class="badge"></span> <span id="detail" class="mute"></span></div>
+        <div class="row"><button class="big in" id="bIn">CHECK IN</button><button class="big out" id="bOut">CHECK OUT</button></div>
+      </div>
+    </div>
+    <div class="card"><h2>Breaks</h2><div class="brk" id="brk"></div><p class="mute small" id="brkNote"></p></div>
+    <div class="grid g3" style="margin-bottom:1rem">
+      <div class="stat"><span>Office duration</span><b id="sGross">0m</b></div>
+      <div class="stat"><span>Total breaks</span><b id="sBrk">0m</b></div>
+      <div class="stat"><span>Net working hours</span><b id="sNet">0m</b></div>
+    </div>
+    <div class="card"><h2>Today's log</h2><div class="scroll"><table><thead><tr><th>Event</th><th>Time</th><th>Duration</th></tr></thead><tbody id="log"></tbody></table></div></div>
+  </section>
+
+  <section id="p-history" class="panel" hidden>
+    <div class="card">
+      <div class="row"><div><label for="month">Month</label><input type="month" id="month" style="width:auto"></div>
+        <div class="grid g3" style="flex:1;min-width:280px"><div class="stat"><span>Days present</span><b id="hDays">0</b></div><div class="stat"><span>Net working hours</span><b id="hNet">0m</b></div><div class="stat"><span>Total breaks</span><b id="hBrk">0m</b></div></div></div>
+    </div>
+    <div class="card scroll"><table><thead><tr><th>Date</th><th>First in</th><th>Last out</th><th>Breaks</th><th>Net hours</th><th></th></tr></thead><tbody id="hist"></tbody></table></div>
+  </section>
+
+  <section id="p-requests" class="panel" hidden>
+    <div class="card">
+      <h2>Request a correction</h2>
+      <div class="grid g2">
+        <div class="field"><label for="rType">What happened?</label><select id="rType">
+          <option value="missed_checkin">I forgot to check in</option>
+          <option value="missed_checkout">I forgot to check out</option>
+          <option value="correction">A recorded time is wrong</option></select></div>
+        <div class="field" id="fAtt" hidden><label for="rAtt">Attendance record</label><select id="rAtt"></select></div>
+        <div class="field" id="fDate"><label for="rDate" id="lDate">Actual arrival date</label><input type="date" id="rDate"></div>
+        <div class="field" id="fIn"><label for="rIn" id="lIn">Actual arrival time (IST)</label><input type="time" id="rIn"></div>
+        <div class="field" id="fOut"><label for="rOut" id="lOut">Actual leaving time (IST), if you already left</label><input type="time" id="rOut"></div>
+      </div>
+      <div class="field"><label for="rWhy">Reason</label><textarea id="rWhy" rows="2" placeholder="Why was it missed or wrong?"></textarea></div>
+      <p class="mute small" id="rHint"></p>
+      <button class="primary" id="rSend">Send to admin</button>
+    </div>
+    <div class="card scroll"><h2>My requests</h2><table><thead><tr><th>Sent</th><th>Request</th><th>Status</th><th>Admin note</th></tr></thead><tbody id="reqs"></tbody></table></div>
+  </section>
+</main>
+<script src="common.js"></script>
+<script src="staff.js"></script>
+</body></html>
